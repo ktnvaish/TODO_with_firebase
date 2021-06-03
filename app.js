@@ -4,3 +4,4 @@ console.log({
   age: 20,
 });
 console.log([1, 2, 3]);
+console.log(true);
