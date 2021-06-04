@@ -1,14 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Checklist</title>
+    <title>My TO-DO's</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+
+
 </head>
+
 <body>
-    This is my serious dev starting..
-    <Script src="app.js">
-    </Script>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">My TO-DO's</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+            </ul>
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 35px;">
+        <form action="" id="add-todo">
+            <input type="text" name="Title" placeholder="Add Task" id="ip">
+            <button class="waves-effect waves-light btn" id="submit">Add Task</button>
+        </form>
+        <ul class="collection" style="margin-top: 30px;">
+            <li class="collection-item" id="todo-list">
+                <!-- <div>
+                    <span>
+                        Buying Food
+                    </span>
+                    <i class="material-icons secondary-content">
+                        delete
+                    </i>
+                    <a href="#modal1" class="modal-trigger secondary-content">
+                        <i class="material-icons secondary-content">
+                            edit
+                        </i>
+                    </a>
+                </div> -->
+            </li>
+        </ul>
+        
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <input type="text" name="newtitle" placeholder="Enter your updated task here">
+            </div>
+            <div class="modal-footer">
+                <a href="#!" id="update" class="modal-close waves-effect waves-green btn-flat">Update</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+                var elems = document.querySelectorAll(".modal");
+                var instances = M.Modal.init(elems)
+            });
+            
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyDFXuivKEHXH6iCUqg0hzhiSROwLoHGnKM",
+            authDomain: "todowithauth-e66f6.firebaseapp.com",
+            projectId: "todowithauth-e66f6",
+            storageBucket: "todowithauth-e66f6.appspot.com",
+            messagingSenderId: "233245311449",
+            appId: "1:233245311449:web:cb0a1050f5606050ef19c8"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script src="app.js"></script>
 </body>
+
 </html>
