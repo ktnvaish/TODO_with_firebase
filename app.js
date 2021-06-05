@@ -1,8 +1,21 @@
 const todoList = document.querySelector("#todo-list");
 const form = document.querySelector("#submit");
 const updatebtn = document.querySelector("#update");
+const logoutItems = document.querySelectorAll(".logged-out");
+const loginItems = document.querySelectorAll(".logged-in");
 let newtitle = "";
 let updateId = null;
+let currentUser = null;
+
+function setUI(user) {
+  if (user) {
+    loginItems.forEach((item) => (item.style.display = "block"));
+    logoutItems.forEach((item) => (item.style.display = "none"));
+  } else {
+    logoutItems.forEach((item) => (item.style.display = "block"));
+    loginItems.forEach((item) => (item.style.display = "none"));
+  }
+}
 
 function renderList(doc) {
   let li = document.createElement("li");
@@ -12,7 +25,7 @@ function renderList(doc) {
   let title = document.createElement("span");
   title.textContent = doc.data().title;
   let anchor = document.createElement("a");
-  anchor.href = "#modal1";
+  anchor.href = "#modal-edit";
   anchor.className = "modal-trigger secondary-content";
   let editBtn = document.createElement("i");
   editBtn.className = "material-icons";
@@ -28,7 +41,11 @@ function renderList(doc) {
 
   deleteBtn.addEventListener("click", (e) => {
     let id = e.target.parentElement.parentElement.getAttribute("data-id");
-    db.collection("todos").doc(id).delete();
+    db.collection("alltodos")
+      .doc(currentUser.uid)
+      .collection("todos")
+      .doc(id)
+      .delete();
   });
 
   deleteBtn.addEventListener("mouseover", (e) => {
@@ -47,9 +64,13 @@ function renderList(doc) {
 
 updatebtn.addEventListener("click", (e) => {
   newtitle = document.getElementsByName("newtitle")[0].value;
-  db.collection("todos").doc(updateId).update({
-    title: newtitle,
-  });
+  db.collection("alltodos")
+    .doc(currentUser.uid)
+    .collection("todos")
+    .doc(updateId)
+    .update({
+      title: newtitle,
+    });
 });
 
 form.addEventListener("click", (e) => {
@@ -59,26 +80,39 @@ form.addEventListener("click", (e) => {
     alert("Please enter a non-empty task");
     return;
   }
-  db.collection("todos").add({
+  db.collection("alltodos").doc(currentUser.uid).collection("todos").add({
     title: tar.value,
   });
   tar.value = "";
 });
 
-db.collection("todos")
-  .orderBy("title")
-  .onSnapshot((snapshot) => {
-    let changes = snapshot.docChanges();
-    changes.forEach((change) => {
-      if (change.type == "added") {
-        renderList(change.doc);
-      } else if (change.type == "removed") {
-        let li = todoList.querySelector(`[data-id = "${change.doc.id}"]`);
-        todoList.removeChild(li);
-      } else if (change.type == "modified") {
-        let li = todoList.querySelector(`[data-id = "${change.doc.id}"]`);
-        li.getElementsByTagName("span")[0].textContent = newtitle;
-        newtitle = "";
-      }
+function getTodos() {
+  todoList.innerHTML = "";
+  currentUser = auth.currentUser;
+  document.querySelector("#user-email").innerHTML =
+    currentUser != null ? "&nbsp&nbsp&nbspHello " + currentUser.email : "";
+  if (currentUser === null) {
+    todoList.innerHTML =
+      '<h3 class="center-align">Please Login to view your TO-DOs</h3><h4 class="center-align">OR</h4><h5 class="center-align">You can SignUp to create your account</h5>';
+    return;
+  }
+  db.collection("alltodos")
+    .doc(currentUser.uid)
+    .collection("todos")
+    .orderBy("title")
+    .onSnapshot((snapshot) => {
+      let changes = snapshot.docChanges();
+      changes.forEach((change) => {
+        if (change.type == "added") {
+          renderList(change.doc);
+        } else if (change.type == "removed") {
+          let li = todoList.querySelector(`[data-id = "${change.doc.id}"]`);
+          todoList.removeChild(li);
+        } else if (change.type == "modified") {
+          let li = todoList.querySelector(`[data-id = "${change.doc.id}"]`);
+          li.getElementsByTagName("span")[0].textContent = newtitle;
+          newtitle = "";
+        }
+      });
     });
-  });
+}
