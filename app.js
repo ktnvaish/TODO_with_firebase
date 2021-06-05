@@ -64,6 +64,10 @@ function renderList(doc) {
 
 updatebtn.addEventListener("click", (e) => {
   newtitle = document.getElementsByName("newtitle")[0].value;
+  if (newtitle === "") {
+    alert("Can't update to an empty task");
+    return;
+  }
   db.collection("alltodos")
     .doc(currentUser.uid)
     .collection("todos")
