@@ -93,7 +93,7 @@ function getTodos() {
     currentUser != null ? "&nbsp&nbsp&nbspHello " + currentUser.email : "";
   if (currentUser === null) {
     todoList.innerHTML =
-      '<h3 class="center-align">Please Login to view your TO-DOs</h3><h4 class="center-align">OR</h4><h5 class="center-align">You can SignUp to create your account</h5>';
+      '<h4 class="center-align">Login to view your TO-DOs</h4><h5 class="center-align">OR</h5><h5 class="center-align">You can SignUp to create your account</h5>';
     return;
   }
   db.collection("alltodos")
