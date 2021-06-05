@@ -26,13 +26,15 @@ function renderList(doc) {
   div.appendChild(anchor);
   li.appendChild(div);
 
-  deleteBtn.addEventListener("mouseover", (e) => {
-    deleteBtn.style.cursor = "pointer";
-  });
   deleteBtn.addEventListener("click", (e) => {
     let id = e.target.parentElement.parentElement.getAttribute("data-id");
     db.collection("todos").doc(id).delete();
   });
+
+  deleteBtn.addEventListener("mouseover", (e) => {
+    deleteBtn.style.cursor = "pointer";
+  });
+
   editBtn.addEventListener("click", (e) => {
     updateId =
       e.target.parentElement.parentElement.parentElement.getAttribute(
@@ -71,10 +73,10 @@ db.collection("todos")
       if (change.type == "added") {
         renderList(change.doc);
       } else if (change.type == "removed") {
-        let li = todoList.querySelector(`[data-id = ${change.doc.id}]`);
+        let li = todoList.querySelector(`[data-id = "${change.doc.id}"]`);
         todoList.removeChild(li);
       } else if (change.type == "modified") {
-        let li = todoList.querySelector(`[data-id = ${change.doc.id}]`);
+        let li = todoList.querySelector(`[data-id = "${change.doc.id}"]`);
         li.getElementsByTagName("span")[0].textContent = newtitle;
         newtitle = "";
       }
