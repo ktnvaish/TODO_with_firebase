@@ -63,7 +63,9 @@ function renderList(doc) {
 }
 
 updatebtn.addEventListener("click", (e) => {
+  const tar_update = document.getElementsByName("newtitle")[0];
   newtitle = document.getElementsByName("newtitle")[0].value;
+  tar_update.value = "";
   if (newtitle === "") {
     alert("Can't update to an empty task");
     return;

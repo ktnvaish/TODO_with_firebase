@@ -19,31 +19,31 @@
 </head>
 
 <body>
-        <nav>
-            <div class="nav-wrapper container">
-                <a href="#" class="brand-logo right logged-out">Your TO-DOs</a>
-                <ul id="nav-mobile">
-                    <li class="logged-in">
-                        <a href="#" id="logout">
-                            Logout
-                        </a>
-                    </li>
-                    
-                    <li class="right logged-in" id = "user-email">
-                        
-                    </li>
-                    <li class="logged-out">
-                        <a href="#" class="modal-trigger" data-target="modal-login">
-                            Login
-                        </a>
-                    </li>
-                    <li class="logged-out">
-                        <a href="#" class="modal-trigger" data-target="modal-signup">
-                            Signup
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo right logged-out">Your TO-DOs</a>
+            <ul id="nav-mobile">
+                <li class="logged-in">
+                    <a href="#" id="logout">
+                        Logout
+                    </a>
+                </li>
+
+                <li class="right logged-in" id="user-email">
+
+                </li>
+                <li class="logged-out">
+                    <a href="#" class="modal-trigger" data-target="modal-login">
+                        Login
+                    </a>
+                </li>
+                <li class="logged-out">
+                    <a href="#" class="modal-trigger" data-target="modal-signup">
+                        Signup
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
     <div class="container" style="margin-top: 35px;">
         <form action="" id="add-todo" class="logged-in">
@@ -52,22 +52,9 @@
         </form>
         <ul class="collection" style="margin-top: 30px;">
             <li class="collection-item" id="todo-list">
-                <!-- <div>
-                    <span>
-                        Buying Food
-                    </span>
-                    <i class="material-icons secondary-content">
-                        delete
-                    </i>
-                    <a href="#modal1" class="modal-trigger secondary-content">
-                        <i class="material-icons secondary-content">
-                            edit
-                        </i>
-                    </a>
-                </div> -->
             </li>
         </ul>
-        
+
         <div id="modal-edit" class="modal">
             <div class="modal-content">
                 <input type="text" name="newtitle" placeholder="Enter your updated task here">
@@ -118,10 +105,10 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-                var elems = document.querySelectorAll(".modal");
-                var instances = M.Modal.init(elems)
-            });
-            
+            var elems = document.querySelectorAll(".modal");
+            var instances = M.Modal.init(elems)
+        });
+
 
         var firebaseConfig = {
             apiKey: "AIzaSyDFXuivKEHXH6iCUqg0hzhiSROwLoHGnKM",
